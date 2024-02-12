@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import data from "./Data";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from 'moment'
+import moment from "moment";
 import format from "date-fns/format";
 
 import DatePicker from "react-datepicker";
@@ -11,9 +11,9 @@ export default function SignInform() {
     lastname: "",
     email: "",
     alternativePhone: "",
-    dateofbirth:'',
+    dateofbirth: "",
     currentaddress: "",
-    state: [],
+    state: "",
     city: "",
     pincode: "",
   });
@@ -22,7 +22,7 @@ export default function SignInform() {
     lastname: "",
     email: "",
     alternativePhone: "",
-    dateofbirth:new Date().getDate(),
+    dateofbirth: "",
     currentaddress: "",
     state: [],
     city: "",
@@ -45,7 +45,7 @@ export default function SignInform() {
     //               validations.firstname="maximum 15 char are allowed"
     //             }
     //             validations.firstname = "the length must be minimum 2 char"
-                
+
     //         }
     //         setFormdata({ ...Formdata, [name]: value });
     //         validations.firstname = "";
@@ -113,108 +113,124 @@ export default function SignInform() {
 
     // }
   };
-  const handelchangeFirstname=(e)=>{
-    const {name,value}=e.target
-      const validations = {};
-      const reg = /^[a-zA-Z]*$/;
-      if (reg.test(e.target.value)) {
-          setFormdata({ ...Formdata, [name]: value });
-
-          if (Formdata.firstname.length <= 2) {
-                validations.firstname = "the length must be minimum 2 char" 
-            }
-          } else {
-            validations.firstname = "only char are allowed";
-          }
-          setError(validations)
-        }
-        console.log(Formdata)
-    const handelchangesecond = (e) => {
-      const { name, value } = e.target;
-      const validations = {};
-      const reg = /^[a-zA-Z]*$/;
-      if (reg.test(e.target.value)) {
-        setFormdata({ ...Formdata, [name]: value });
-
-        if (Formdata.lastname.length <= 2) {
-          validations.lastname = "the length must be minimum 2 char";
-        }
-      } else {
-        validations.lastname = "only char are allowed";
+  const handelchangeFirstname = (e) => {
+    const { name, value } = e.target;
+    const validations = {};
+    const reg = /^[a-zA-Z]*$/;
+    if (reg.test(e.target.value)) {
+      setFormdata({ ...Formdata, [name]: value });
+      if (Formdata.firstname&&Formdata.firstname.length <= 2) {
+        validations.firstname = "the length must be minimum 2 char";
       }
-      setError(validations);
-    };
-     const handelchangeemail = (e) => {
-       const { name, value } = e.target;
-       const validations = {};
-       let vaalues=e.target.value
-        setFormdata({...Formdata,[name]:value})
-       const r = /^[^\s@]+@([\w-]+\.)+[\w-]{2,3}$/;
-      // const r = /^[a-zA-Z]*$/;
-      if (!e.target.value.match(r)) {
-        // console.log("hiii this is");
-        setError({ email: "email.is not valid" });
-      } else {
-        setFormdata({ ...Formdata, [name]: value });
-        setError("");
-      }
+    } else {
+      validations.firstname = "only char are allowed";
     }
-    const handelchangealternativePhone=(e)=>{
-      const { name, value } = e.target;
-      const reg = /^[0-9]*$/;
-          if (reg.test(e.target.value)){
-                setFormdata({ ...Formdata, [name]: value });
-                setError("");
+    setError(validations);
+  };
+  console.log(Formdata);
+  const handelchangesecond = (e) => {
+    const { name, value } = e.target;
+    const validations = {};
+    const reg = /^[a-zA-Z]*$/;
+    if (reg.test(e.target.value)) {
+      setFormdata({ ...Formdata, [name]: value });
 
-          }else{
-              setError({ alternativePhone :'only numbers are allowed'});
-          }
-      
+      if (Formdata.lastname&&Formdata.lastname.length <= 2) {
+        validations.lastname = "the length must be minimum 2 char";
+      }
+    } else {
+      validations.lastname = "only char are allowed";
     }
-    const handleChangeDate=(e)=>{
+    setError(validations);
+  };
+  const handelchangeemail = (e) => {
+    const { name, value } = e.target;
+    const validations = {};
+    let vaalues = e.target.value;
+    setFormdata({ ...Formdata, [name]: value });
+    const r = /^[^\s@]+@([\w-]+\.)+[\w-]{2,3}$/;
+    // const r = /^[a-zA-Z]*$/;
+    if (!e.target.value.match(r)) {
+      // console.log("hiii this is");
+      setError({ email: "email.is not valid Ex-abc@gmail.com" });
+    } else {
+      setFormdata({ ...Formdata, [name]: value });
+      setError("");
+    }
+  };
+  const handelchangealternativePhone = (e) => {
+    const { name, value } = e.target;
+    const reg = /^[0-9]*$/;
+    if (reg.test(e.target.value)) {
+      setFormdata({ ...Formdata, [name]: value });
+      setError("");
+    } else {
+      setError({ alternativePhone: "only numbers are allowed" });
+    }
+  };
+  const handleChangeDate = (e) => {
     //  console.log(format(e,'dd/MM/yyyy'))
-     console.log(format(e,'dd/MM/yyy'))
-     
-     setFormdata({dateofbirth:e})
-     let date = moment(e).format("DD/MM/YYYY");
-     console.log("date", date);
-     setFormdata({ ...Formdata, ["dateofbirth"]: date });
+    console.log(format(e, "dd/MM/yyy"));
 
+    setFormdata({ dateofbirth: e });
+    let date = moment(e).format("DD/MM/YYYY");
+    console.log("date", date);
+    setFormdata({ ...Formdata, ["dateofbirth"]: date });
+  };
 
-     
+  const handelchangeformcurrentaddress = (e) => {
+    const { name, value } = e.target;
+
+    setFormdata({ ...Formdata, [name]: value });
+  };
+  const handelchangeformpincode = (e) => {
+    const { name, value } = e.target;
+    const validations = {};
+    const values = e.target.value;
+    const reg = /^[0-9]*$/;
+    debugger
+    if (reg.test(e.target.value)) {
+      setFormdata({ ...Formdata, [name]: value });
+      if (Formdata.pincode&& Formdata.pincode.length < 5) {
+        validations.pincode = "the length must be minimum 6 char";
+      } else {
+        validations.pincode = "";
+      }
+    } else {
+      validations.pincode = "only number are allowed";
     }
+    setError(validations);
+  };
 
-    const handelchangeformcurrentaddress = (e) => {
-      const {name,value}=e.target
-  
-      setFormdata({...Formdata,[name]:value})
-    };
-    const handelchangeformpincode=(e)=>{
-       const { name, value } = e.target;
-       const validations={}
-       const values=e.target.value
-       const reg = /^[0-9]*$/;
-      if (reg.test(e.target.value)) {
-          setFormdata({ ...Formdata, [name]: value });
+  const [capital, setcapital] = useState("");
+  const handelchangeState = (e) => {
+    const Selectedcountry = e.target.value;
+    //  const {name,value}=e.target
 
-          if (Formdata.pincode.length <= 6) {
-                validations.pincode = "the length must be minimum 6 char" 
-            }else{
-              validations.pincode=''
-            }
-          } else {
-            validations.pincode = "only number are allowed";
-          }
-          setError(validations)
-        }
+    setFormdata({ ...Formdata, ["state"]: Selectedcountry });
+    setError({state:''})
+    setcapital(data.find((ctr) => ctr.name === e.target.value)?.citsies || []);
+    // setFormdata({ ...Formdata, ["city"]: capital });
+    console.log(capital);
+    //  setSelectedcountry(Selectedcountry);
+    //  setCity("");
+    //  setcapital(
+    //    data.find((ctr) => ctr.name === e.target.value)?.citsies || []
+    //  );
+  };
+  const handelchangecity = (e) => {
+    // let d = setCity(data.find((ctr) => ctr.citsies === e.target.value).citsies);
+    // //   let d = e.target.value;
+    const { name, value } = e.target;
+    setFormdata({ ...Formdata, ["city"]: value });
+     setError({ state: "" });
 
-    
-
+    // console.log("this si sselected city", Formdata.state, Formdata.city);
+  };
   ////////////////////end handelchange///////////////
   const handelsubmit = (e) => {
     e.preventDefault();
     const validations = {};
-    console.log("this is submit eeeeeee", Formdata);
     if (Formdata.firstname.length <= 0) {
       validations.firstname = "FirstName is required";
     }
@@ -229,26 +245,28 @@ export default function SignInform() {
     }
     if (Formdata.pincode.length <= 0) {
       validations.pincode = "pincode is required";
+      if (Formdata.pincode.length <6) {
+        validations.pincode = "minimm 6 char are required";
+      }
     }
-    if (Formdata.firstname.length <= 0) {
-      validations.firstname = "FirstName is required";
+    if (Formdata.state.length <= 0) {
+      validations.state = "State is required  is required";
     }
-    if (Formdata.firstname.length <= 0) {
-      validations.firstname = "FirstName is required";
-    }
-    if (Formdata.firstname.length <= 0) {
-      validations.firstname = "FirstName is required";
+    if (Formdata.city.length <= 0) {
+      validations.city = "city is required";
     }
     setError(validations);
-  };
-  
-  const handelchangecity = (e) => {
-    // let d = setCity(data.find((ctr) => ctr.citsies === e.target.value).citsies);
-    //   let d = e.target.value;
-    const { name, value } = e.target;
-    setFormdata({ [name]: value });
-
-    console.log("this si sselected city", Formdata.state, Formdata.city);
+    if (
+      Formdata.firstname &&
+      Formdata.email &&
+      Formdata.dateofbirth &&
+      Formdata.state &&
+      Formdata.city &&
+      Formdata.pincode
+    ) {
+      alert("form submited");
+      console.log("this is submit eeeeeee", Formdata);
+    }
   };
 
   return (
@@ -262,7 +280,7 @@ export default function SignInform() {
                 background: "black",
                 opacity: 80 + "%",
                 width: 800 + "px",
-                height: 400 + "px",
+                height: 500 + "px",
               }}
             >
               <div
@@ -281,6 +299,8 @@ export default function SignInform() {
                     name="firstname"
                     onChange={handelchangeFirstname}
                     value={Formdata.firstname}
+                    placeholder="Enter FirstName"
+                    maxLength={15}
                   />
                   <br />
                   {Error && (
@@ -288,13 +308,15 @@ export default function SignInform() {
                   )}
                 </div>
                 <div>
-                  <label style={{ color: "white" }}>End Name</label>
+                  <label style={{ color: "white" }}>Last Name</label>
                   <br />
                   <input
                     type="text"
                     name="lastname"
                     onChange={handelchangesecond}
                     value={Formdata.lastname}
+                    placeholder="Enter LastName"
+                    maxLength={15}
                   />
                   <br />
                   {Error && (
@@ -318,12 +340,15 @@ export default function SignInform() {
                     name="email"
                     onChange={handelchangeemail}
                     value={Formdata.email}
+                    placeholder="Enter Email"
                   />
                   <br />
                   {Error && <span style={{ color: "red" }}>{Error.email}</span>}
                 </div>
                 <div>
-                  <label style={{ color: "white" }}>Alternative</label>
+                  <label style={{ color: "white" }}>
+                    Alternative Phone Number
+                  </label>
                   {/* <p>select date above 18 years </p> */}
                   <br />
                   <input
@@ -332,6 +357,7 @@ export default function SignInform() {
                     onChange={handelchangealternativePhone}
                     value={Formdata.alternativePhone}
                     maxLength={10}
+                    placeholder="Enter Number"
                   />
                   <br />
                   {Error && (
@@ -358,11 +384,12 @@ export default function SignInform() {
                     onChange={handelchangeform}
                     value={Formdata.dateofbirth}
                   /> */}
-                  <h5 style={{ color: "red" }}>
+                  {/* <h5 style={{ color: "red" }}>
                     18 years above are allowed <br />
-                    so current year -18 years<br/>
+                    so current year -18 years
+                    <br />
                     select according
-                  </h5>
+                  </h5> */}
                   <DatePicker
                     showYearDropdown
                     yearDropdownItemNumber={150}
@@ -370,8 +397,10 @@ export default function SignInform() {
                     maxDate={moment().subtract(18, "years")._d}
                     scrollableYearDropdown
                     onChange={handleChangeDate}
+                    placeholderText="dd/mm/yyyy"
                     selected={Formdata.dateofbirth}
                   />
+                  <br/>
                   {Error && (
                     <span style={{ color: "red" }}>{Error.dateofbirth}</span>
                   )}
@@ -384,7 +413,9 @@ export default function SignInform() {
                     name="currentaddress"
                     onChange={handelchangeformcurrentaddress}
                     value={Formdata.currentaddress}
+                    placeholder="Enter Current Address"
                   />
+                  <br/>
                   {Error && (
                     <span style={{ color: "red" }}>{Error.currentaddress}</span>
                   )}
@@ -401,29 +432,37 @@ export default function SignInform() {
                 <div>
                   <label style={{ color: "white" }}>State</label>
                   <br />
-                  {/* <select onChange={handelchangeform} value={Formdata.state}>
-                  <option value="">select state</option>
-                  {data &&
-                    data.map((item, i) => (
-                      <>
-                        <option key={item.name} value={item.name}>
-                          {item.name}
-                        </option>
-                      </>
-                    ))}
-                </select>
-                <br />
-                <select onChange={handelchangecity} value={Formdata.city}>
-                  <option value="">select city</option>
-                  {Formdata.state &&
-                    Formdata.state.map((item, i) => (
-                      <>
-                        <option id={i} key={item} value={item}>
-                          {item}
-                        </option>
-                      </>
-                    ))}
-                </select> */}
+                  <select onChange={handelchangeState} value={Formdata.state}>
+                    <option value="">select state</option>
+                    {data &&
+                      data.map((item, i) => (
+                        <>
+                          <option key={item.name} value={item.name}>
+                            {item.name}
+                          </option>
+                        </>
+                      ))}
+                  </select>
+
+                  <br />
+                  {Error && <span style={{ color: "red" }}>{Error.state}</span>}
+                </div>
+                <div>
+                  <label style={{ color: "white" }}>City</label>
+                  <br />
+                  <select onChange={handelchangecity} value={Formdata.city}>
+                    <option value="">select city</option>
+                    {capital &&
+                      capital.map((item, i) => (
+                        <>
+                          <option id={i} key={item} value={item}>
+                            {item}
+                          </option>
+                        </>
+                      ))}
+                  </select>
+                  <br />
+                  {Error && <span style={{ color: "red" }}>{Error.city}</span>}
                 </div>
               </div>
               <div style={{ padding: 10 + "px", margin: 10 + "px" }}>
@@ -435,7 +474,9 @@ export default function SignInform() {
                   onChange={handelchangeformpincode}
                   value={Formdata.pincode}
                   maxLength={6}
+                  placeholder="Enter pincode"
                 />
+                <br/>
                 {Error && <span style={{ color: "red" }}>{Error.pincode}</span>}
               </div>
               <div style={{ color: "white" }}>

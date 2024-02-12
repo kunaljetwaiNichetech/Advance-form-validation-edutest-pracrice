@@ -11,27 +11,61 @@ export default function LoginForm() {
     let [error,seterror]=useState({})
     const handelchange=(e)=>{
         const regs = /^[0-9]*$/;
+     
         if (regs.test(e.target.value)){
-              seterror({ onlyNUm: "" });
-
-            setNumber(e.target.value)
+          setNumber(e.target.value)
+           
+          seterror({ onlyNUm: "" });
+          
+          
         }else {
-            seterror({onlyNUm:"Only numbers are are allowed"})
+          seterror({onlyNUm:"Only numbers are are allowed"})
         }
-    }
+       
+          
+     
+       
+        // for (let i = 0 ; i < Number.length; i++) {
+        //  // const element = array[index];
+        //  console.log(i)
+        // }
+      }
     const handelclick=(e)=>{
         e.preventDefault()
         console.log(Number);
-        if (Number==match){
+        // const cheack = Number.split("");
+        // const all = (arr) => cheack.every((val) => val === cheack[0]);
+        // const result = all();
+        // if (result == !true)
+        //   console.log("this is all result for numbers", result);
+        let k = new Set(Number);    
+        if (Number.length<10){
+          //  if (result == true)
+          seterror({onlyNUm:'10 number are must '})
+        }else if (Number==match){
             toast("you are regestered")
             setTimeout(() => {
                 
                 hist('/otp')
-            }, 3000);
-        }else{
-            toast('you have to regestier first')
-        }
+              }, 3000);
+        }else if (Number && k.size === 1) {
+           seterror({
+             onlyNUm: "all Number are same please cheack the phone number",
+            });
+          }
+        
+        
+        else {
+          toast("you have to regestier first");
+        
+        
+        
+        seterror({onlyNUm:''})
+          
+        // console.log("the numbers are same");
+      
     }
+  }
 
   return (
     <div
@@ -46,7 +80,8 @@ export default function LoginForm() {
       <form>
         <div style={{ width: 300 + "px", height: 40 + "px" }}>
           <label style={{ color: "white" }}>Number : </label>
-          <input type="text" value={Number} onChange={handelchange} maxLength={10} />
+          <input type="text" placeholder='Enter Number'  value={Number} onChange={handelchange} maxLength={10} />
+
         </div>
         {error && <span style={{ color: "red" }}>{error.onlyNUm}</span>}
         &nbsp;
