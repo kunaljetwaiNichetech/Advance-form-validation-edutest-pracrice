@@ -10,19 +10,11 @@ export default function OtpPage2() {
   let match = "8401";
   let [timer, settimer] = useState("");
   const [ShowResenotp, setShowResenotp] = useState(false);
-  const ref0 = useRef();
-  const ref = useRef();
-  const ref1 = useRef();
-  const ref2 = useRef();
+ 
 
   let otp = ["", "", "", ""];
   let [inputs, setinputs] = useState(otp);
-  let [Otp, setOtp] = useState({
-    first: "",
-    second: "",
-    third: "",
-    fourth: "",
-  });
+ 
   let [error, seterror] = useState({});
   const handelresend = () => {
     console.log("clicked the resend ");
@@ -40,30 +32,7 @@ export default function OtpPage2() {
     }, 1000);
     setShowResenotp(false);
   };
-  const keyuppp = (e) => {
-    console.log(e.key);
-
-    if (Otp.first.length === 1) {
-      ref.current.focus();
-
-      if (e.key == "Backspace") {
-        ref0.current.focus();
-      }
-    }
-    if (Otp.second.length === 1) {
-      ref1.current.focus();
-      if (e.key == "Backspace") {
-        ref.current.focus();
-      }
-    }
-    if (Otp.third.length === 1) {
-      ref2.current.focus();
-      if (e.key == "Backspace") {
-        ref1.current.focus();
-      }
-    }
-  };
-
+ 
   useEffect(() => {
     let count = 10;
     const time = setInterval(function () {
@@ -98,59 +67,72 @@ export default function OtpPage2() {
   const handelchange = (e, index) => {
     const regs = /^[0-9]*$/;
     const val = e.target.value;
-
+    console.log(val, index);
     console.log("rrr", val);
-    if (regs.test(e.target.value)) {
-      let { name, value } = e.target;
-
-      setOtp({ ...Otp, [name]: value });
-      debugger;
-      seterror({ onlyNUm: "" });
-    } else {
-      seterror({ onlyNUm: "Only number are allowed" });
-    }
-    if (index < inputs.length - 1) {
-      refs[index + 1].current.focus();
-    }
-    const copyinputs = [...inputs];
-    copyinputs[index] = val;
-    setinputs(copyinputs);
+     if (index < inputs.length - 1) {
+       // 1
+       refs[index + 1].current.focus();
+     }
+     const copyInputs = [...inputs];
+     copyInputs[index] = val;
+     setinputs(copyInputs);
   };
   const handelclick = (e) => {
     e.preventDefault();
     //  console.log(e);
     //  console.log(Otp);
-    let ar = match.split("");
+    // let ar = match.split("");
     // console.log(ar)
-    ar.forEach((element) => {
+    // ar.forEach((element) => {
       // console.log(element);
 
-      if (
-        ar[0] == Otp.first &&
-        ar[1] == Otp.second &&
-        ar[2] == Otp.third &&
-        ar[3] == Otp.fourth
-      ) {
-        toast("Otp Varified");
-        hist("/info");
-      } else {
-        toast("please cheach the otp and try again");
-      }
-    });
+    //   if (
+    //     ar[0] == Otp.first &&
+    //     ar[1] == Otp.second &&
+    //     ar[2] == Otp.third &&
+    //     ar[3] == Otp.fourth
+    //   ) {
+    //     toast("Otp Varified");
+    //     hist("/info");
+    //   } else {
+    //     toast("please cheach the otp and try again");
+    //   }
+    // });
+     const missed = inputs
+       .map((item, i) => {
+         if (item === "") return i;
+       })
+       .filter((item) => item || item === 0);
+     console.log("missed ", missed);
+   
+     if (missed.length) {
+       return;
+     }
+
+     const userInput = inputs.join("");
+    //  const isMatch = userInput === CODE;
+    //  const msg = isMatch ? "Code is Valid" : "Code is not Valid";
+    //  alert(msg);
   };
   // console.log('inputs',inputs)
 
   const handelkeydown = (e, index) => {
     console.log(e.target.value, index);
-    if (e.keyCode === 8) {
-      const copyInputs = [...inputs];
-      copyInputs[index] = "";
-      setinputs(copyInputs);
-      console.log(index);
-      if (index > 0) {
-        console.log(index);
-        refs[index - 1].current.focus();
+    if (e.target.value)
+    {
+
+      if (e.keyCode === 8) {
+        const copyInputs = [...inputs];
+        copyInputs[index] = "";
+        setinputs(copyInputs);
+  
+        if (index > 0) {
+          refs[index - 1].current.focus();
+        }
       }
+    }else
+    {
+      console.log("this si selse one")
     }
   };
   return (
@@ -176,68 +158,14 @@ export default function OtpPage2() {
                   value={inputs[i]}
                   type="text"
                   maxLength={1}
+                  key={i}
                   ref={refs[i]}
                   onChange={(e) => handelchange(e, i)}
                   onKeyDown={(e) => handelkeydown(e, i)}
                 />
               );
             })}
-            {/* <input
-              type="text"
-              name="first"
-              style={{
-                width: 45 + "px",
-                borderRadius: 5 + "px",
-                height: 35 + "px",
-              }}
-              ref={ref0}
-              onKeyUp={keyuppp}
-              value={Otp.first}
-              onChange={handelchange}
-              maxLength={1}
-            />
-            <input
-              type="text"
-              name="second"
-              style={{
-                width: 45 + "px",
-                borderRadius: 5 + "px",
-                height: 35 + "px",
-              }}
-              onKeyUp={keyuppp}
-              ref={ref}
-              value={Otp.second}
-              onChange={handelchange}
-              maxLength={1}
-            />
-            <input
-              type="text"
-              name="third"
-              style={{
-                width: 45 + "px",
-                borderRadius: 5 + "px",
-                height: 35 + "px",
-              }}
-              onKeyUp={keyuppp}
-              ref={ref1}
-              value={Otp.third}
-              onChange={handelchange}
-              maxLength={1}
-            />
-            <input
-              type="text"
-              name="fourth"
-              style={{
-                width: 45 + "px",
-                borderRadius: 5 + "px",
-                height: 35 + "px",
-              }}
-              ref={ref2}
-              onKeyUp={keyuppp}
-              value={Otp.fourth}
-              onChange={handelchange}
-              maxLength={1}
-            /> */}
+           
           </div>
           {error && <span style={{ color: "red" }}>{error.onlyNUm}</span>}
           &nbsp;

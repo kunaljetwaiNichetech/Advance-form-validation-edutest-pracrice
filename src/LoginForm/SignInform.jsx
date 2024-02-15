@@ -117,29 +117,55 @@ export default function SignInform() {
     const { name, value } = e.target;
     const validations = {};
     const reg = /^[a-zA-Z]*$/;
-    if (reg.test(e.target.value)) {
-      setFormdata({ ...Formdata, [name]: value });
-      if (Formdata.firstname&&Formdata.firstname.length <= 2) {
-        validations.firstname = "the length must be minimum 2 char";
+
+    if (e.target.value) {
+      if (reg.test(e.target.value)) {
+        console.log("the length for first name",Formdata.firstname.length)
+        if (
+          (Formdata.firstname && Formdata.firstname.length <= 2) ||
+          Formdata.firstname.length <= 1
+        ) {
+          validations.firstname = "the length must be more thnen 3";
+        } else {
+          validations.firstname = "";
+        }
+        setFormdata({ ...Formdata, [name]: value });
+      } else {
+        validations.firstname = "only char are allowed";
       }
     } else {
-      validations.firstname = "only char are allowed";
+      setFormdata({ ...Formdata, [name]: value });
+      validations.firstname = "please enter first name";
     }
+    // if (Formdata.firstname===''){
+
+    console.log("formdata firstname", Formdata.firstname);
+    // }
     setError(validations);
   };
-  console.log(Formdata);
+  // console.log(Formdata);
   const handelchangesecond = (e) => {
     const { name, value } = e.target;
     const validations = {};
     const reg = /^[a-zA-Z]*$/;
-    if (reg.test(e.target.value)) {
-      setFormdata({ ...Formdata, [name]: value });
+    if (e.target.value){
 
-      if (Formdata.lastname&&Formdata.lastname.length <= 2) {
-        validations.lastname = "the length must be minimum 2 char";
+      if (reg.test(e.target.value)) {
+        setFormdata({ ...Formdata, [name]: value });
+  
+        if (Formdata.lastname && Formdata.lastname.length <= 2) {
+          validations.lastname = "the length must be minimum more 2 char";
+        } else {
+          validations.lastname = "";
+        }
+      } else {
+        validations.lastname = "only char are allowed";
       }
-    } else {
-      validations.lastname = "only char are allowed";
+    }else {
+      setFormdata({ ...Formdata, [name]: value });
+      validations.lastname = "please enter Last name";
+
+
     }
     setError(validations);
   };
@@ -150,22 +176,34 @@ export default function SignInform() {
     setFormdata({ ...Formdata, [name]: value });
     const r = /^[^\s@]+@([\w-]+\.)+[\w-]{2,3}$/;
     // const r = /^[a-zA-Z]*$/;
-    if (!e.target.value.match(r)) {
-      // console.log("hiii this is");
-      setError({ email: "email.is not valid Ex-abc@gmail.com" });
-    } else {
-      setFormdata({ ...Formdata, [name]: value });
-      setError("");
+    if (e.target.value){
+
+      if (!e.target.value.match(r)) {
+        // console.log("hiii this is");
+        setError({ email: "email.is not valid Ex-abc@gmail.com" });
+      } else {
+        setFormdata({ ...Formdata, [name]: value });
+        setError("");
+      }
+    }else{
+       setError({ email: "please enter your Email" });
+
     }
   };
   const handelchangealternativePhone = (e) => {
     const { name, value } = e.target;
     const reg = /^[0-9]*$/;
-    if (reg.test(e.target.value)) {
-      setFormdata({ ...Formdata, [name]: value });
-      setError("");
-    } else {
-      setError({ alternativePhone: "only numbers are allowed" });
+    if (e.target.value){
+
+      if (reg.test(e.target.value)) {
+        setFormdata({ ...Formdata, [name]: value });
+        setError("");
+      } else {
+        setError({ alternativePhone: "only numbers are allowed" });
+      }
+    }else{
+       setFormdata({ ...Formdata, [name]: value });
+      setError({ alternativePhone: "please enter phone number " });
     }
   };
   const handleChangeDate = (e) => {
@@ -180,24 +218,35 @@ export default function SignInform() {
 
   const handelchangeformcurrentaddress = (e) => {
     const { name, value } = e.target;
+    if (e.target.value){
 
-    setFormdata({ ...Formdata, [name]: value });
+      setFormdata({ ...Formdata, [name]: value });
+    }else{
+      setError({ currentaddress :'please enter the address'});
+    }
+
   };
   const handelchangeformpincode = (e) => {
     const { name, value } = e.target;
     const validations = {};
     const values = e.target.value;
     const reg = /^[0-9]*$/;
-    debugger
-    if (reg.test(e.target.value)) {
-      setFormdata({ ...Formdata, [name]: value });
-      if (Formdata.pincode&& Formdata.pincode.length < 5) {
-        validations.pincode = "the length must be minimum 6 char";
+    // debugger;
+    if (e.target.value){
+
+      if (reg.test(e.target.value)) {
+        setFormdata({ ...Formdata, [name]: value });
+        if (Formdata.pincode && Formdata.pincode.length < 5) {
+          validations.pincode = "the length must be minimum 6 char";
+        } else {
+          validations.pincode = "";
+        }
       } else {
-        validations.pincode = "";
+        validations.pincode = "only number are allowed";
       }
-    } else {
-      validations.pincode = "only number are allowed";
+    }else{
+      setFormdata({ ...Formdata, [name]: value });
+      validations.pincode = "Please Enter the Pincode";
     }
     setError(validations);
   };
@@ -206,9 +255,10 @@ export default function SignInform() {
   const handelchangeState = (e) => {
     const Selectedcountry = e.target.value;
     //  const {name,value}=e.target
+    
 
     setFormdata({ ...Formdata, ["state"]: Selectedcountry });
-    setError({state:''})
+    setError({ state: "" });
     setcapital(data.find((ctr) => ctr.name === e.target.value)?.citsies || []);
     // setFormdata({ ...Formdata, ["city"]: capital });
     console.log(capital);
@@ -223,7 +273,7 @@ export default function SignInform() {
     // //   let d = e.target.value;
     const { name, value } = e.target;
     setFormdata({ ...Formdata, ["city"]: value });
-     setError({ state: "" });
+    setError({ state: "" });
 
     // console.log("this si sselected city", Formdata.state, Formdata.city);
   };
@@ -245,7 +295,7 @@ export default function SignInform() {
     }
     if (Formdata.pincode.length <= 0) {
       validations.pincode = "pincode is required";
-      if (Formdata.pincode.length <6) {
+      if (Formdata.pincode.length < 6) {
         validations.pincode = "minimm 6 char are required";
       }
     }
@@ -289,6 +339,7 @@ export default function SignInform() {
                   justifyContent: "space-around",
                   padding: 10 + "px",
                   margin: 10 + "px",
+                
                 }}
               >
                 <div>
@@ -400,7 +451,7 @@ export default function SignInform() {
                     placeholderText="dd/mm/yyyy"
                     selected={Formdata.dateofbirth}
                   />
-                  <br/>
+                  <br />
                   {Error && (
                     <span style={{ color: "red" }}>{Error.dateofbirth}</span>
                   )}
@@ -415,7 +466,7 @@ export default function SignInform() {
                     value={Formdata.currentaddress}
                     placeholder="Enter Current Address"
                   />
-                  <br/>
+                  <br />
                   {Error && (
                     <span style={{ color: "red" }}>{Error.currentaddress}</span>
                   )}
@@ -476,7 +527,7 @@ export default function SignInform() {
                   maxLength={6}
                   placeholder="Enter pincode"
                 />
-                <br/>
+                <br />
                 {Error && <span style={{ color: "red" }}>{Error.pincode}</span>}
               </div>
               <div style={{ color: "white" }}>
