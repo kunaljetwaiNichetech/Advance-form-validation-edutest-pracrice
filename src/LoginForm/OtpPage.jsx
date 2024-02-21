@@ -214,11 +214,8 @@ export default function OtpPage() {
   // }
   return (
     <div>
-
       <div style={{ background: "black", opacity: 80 + "%" }}>
         <h1 style={{ color: "white" }}>OTP</h1>
-
-
         <h1 style={{ color: "white" }}>
           {ResendCounter >= 3
             ? ""

@@ -5,6 +5,7 @@ import moment from "moment";
 import format from "date-fns/format";
 
 import DatePicker from "react-datepicker";
+import { useNavigate } from "react-router-dom";
 export default function SignInform() {
   const [Formdata, setFormdata] = useState({
     firstname: "",
@@ -28,6 +29,7 @@ export default function SignInform() {
     city: "",
     pincode: "",
   });
+  const hist=useNavigate()
   ///////handelchange///////////////////
   const handelchangeform = (e) => {
     let Error = "";
@@ -315,6 +317,7 @@ export default function SignInform() {
       Formdata.pincode
     ) {
       alert("form submited");
+      hist("/acadamicdetails");
       console.log("this is submit eeeeeee", Formdata);
     }
   };
@@ -326,12 +329,12 @@ export default function SignInform() {
           <h1 style={{ color: "white" }}>the info Page</h1>
           <form onSubmit={handelsubmit}>
             <div
-              style={{
-                background: "black",
-                opacity: 80 + "%",
-                width: 800 + "px",
-                height: 500 + "px",
-              }}
+                style={{
+                  background: "black",
+                  opacity: 80 + "%",
+                  width: 800 + "px",
+                  height: 500 + "px",
+                }}
             >
               <div
                 style={{

@@ -15,4 +15,5 @@ let data=[{
     citsies:["Nadia","Asanosal","siliguri","Darjaling"]
 }
 ]
+
 export default data

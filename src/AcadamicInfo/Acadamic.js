@@ -1,0 +1,2 @@
+let Acadamic=["MBA","BBA","B.Tech","B.Arch", "M.Tech", "ME", "BE", "psychology", "history", "sociology","BCA","MCA", "B.F.A","B.Ed", "M.Ed","Fashion/Interior/Web", "BJMC","B.Pharma", "M.Pharma","Hotel Management","BDS" ,"MBBS","B.Sc."," M.Sc", "BDS","B.Com","CA","CFA"," CS", "B.Arch"]
+export default Acadamic
