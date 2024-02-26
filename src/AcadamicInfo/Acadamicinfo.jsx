@@ -16,6 +16,7 @@ const Acadamicinfo = () => {
       Institute: "",
       Percentage: "",
       Year: "",
+      button: false,
     },
   ]);
   console.log("this is acadamic details", AcadamicDetails);
@@ -49,7 +50,9 @@ const Acadamicinfo = () => {
     let data = [...AcadamicDetails];
     if (value) {
       // const validation={}
-      const reg = /^[a-zA-Z\s]*$/;
+      const reg = /^[A-Za-z]( ?[A-Za-z] ?)*$/g
+      // const reg =
+      
       if (reg.test(e.target.value)) {
         const { name, value } = e.target;
         const lsit = [...AcadamicDetails];
@@ -69,7 +72,7 @@ const Acadamicinfo = () => {
       setAcadamicDetails(lsit);
       //  setInstitute(e.target.value);
       //  setError({ ...Error, ["Institute"]: "Please enter the Institute name" });
-      data[i].d = "Please enter the Institute name";
+      data[i].I = "Please enter the Institute name";
     }
     setAcadamicDetails(data);
   };
@@ -77,7 +80,7 @@ const Acadamicinfo = () => {
   const HandelPercentage = (e, i) => {
     let data = [...AcadamicDetails];
     //  const validations = {};
-    const regs = /^[0-9]$|^[1-9][0-9]$|^(99)*$/;
+    const regs = /^[1-9]$|^[0-9][0-9]$|^(99)*$/;
     if (e.target.value) {
       if (regs.test(e.target.value)) {
         const { name, value } = e.target;
@@ -92,7 +95,17 @@ const Acadamicinfo = () => {
         // setPercentage(e.target.value);
       } else {
         // setError({ ...Error, ["Percentage"]: "only numbers are allowed" });
-        data[i].P = "only numbers are allowed";
+        console.log("the length off percentage",AcadamicDetails[i]["Percentage"].length)
+          if (AcadamicDetails[i]["Percentage"].length<2){
+
+            data[i].P = "only numbers are allowed";
+          }else{
+            data[i].P = "";
+
+          }
+
+
+
       }
     } else {
       const { name, value } = e.target;
@@ -235,21 +248,30 @@ const Acadamicinfo = () => {
     return valid;
   };
   //////////////////end form val//////////////////
-  
+
   //////handel add or remove button for div ///////////
+  const [shoeAddbuton, setshoeAddbuton] = useState(true);
+  const [shoeRemovebuton, setshoeRemovebuton] = useState(true);
   const handeladd = (val, i) => {
     const errorRes = formValidation(AcadamicDetails);
-    console.log("errorRes", errorRes);
-    
+    console.log("iiiii", i);
+
     debugger;
     if (errorRes) {
       // api call
       // setFormVal([...formVal, { name: "", email: "" }]);
+
+      const lsit = [...AcadamicDetails];
+      console.log("iiiii",i)
+      lsit[i]["button"] = true;
+
       setAcadamicDetails([
         ...AcadamicDetails,
-        { degree: "", Institute: "", Percentage: "", Year: "" },
+        { degree: "", Institute: "", Percentage: "", Year: "", button: false },
       ]);
-    } else {
+    //   setshoeAddbuton(true);
+    //   setshoeRemovebuton(false);
+    // } else {
       // error msg
     }
 
@@ -261,23 +283,28 @@ const Acadamicinfo = () => {
     list.splice(i, 1);
     // console.log("this is the index od iiii",i)
     setAcadamicDetails(list);
+    setshoeRemovebuton(false);
   };
   ///////////////end of handel  add or remove button//////////////
-/////////////////handel Submit button ///////////////////////////
-const onSubmit=()=>{
-  console.log("this is acadamic details ",AcadamicDetails)
-  let cheack=[...AcadamicDetails]
-  for (let index = 0; index < cheack.length; index++) {
-    // const element = array[index];
-    if (cheack[index].Institute==''||cheack[index].degree==''||cheack[index].Year==''||cheack[index].Percentage=='')
-  {
-    alert ("please cheak there is an empty feild")
-  }    else{
-    alert("thanks your details are added")
-  }
-  }
-}
-////////////////end of handel submit button/////////////////////
+  /////////////////handel Submit button ///////////////////////////
+  const onSubmit = () => {
+    console.log("this is acadamic details ", AcadamicDetails);
+    let cheack = [...AcadamicDetails];
+    for (let index = 0; index < cheack.length; index++) {
+      // const element = array[index];
+      if (
+        cheack[index].Institute == "" ||
+        cheack[index].degree == "" ||
+        cheack[index].Year == "" ||
+        cheack[index].Percentage == ""
+      ) {
+        alert("please cheak there is an empty feild");
+      } else {
+        alert("thanks your details are added");
+      }
+    }
+  };
+  ////////////////end of handel submit button/////////////////////
 
   return (
     <div>
@@ -296,7 +323,7 @@ const onSubmit=()=>{
                   }}
                 >
                   <div>
-                    <h1 style={{ color: "white" }}>this is acadamic Page</h1>
+                    <h1 style={{ color: "white" }}>This is acadamic Page</h1>
                   </div>
                   <div
                     style={{
@@ -383,19 +410,45 @@ const onSubmit=()=>{
                 <div></div>
               </form>
             </div>
-            <button onClick={() => handeladd(val, i)}>Add</button>
-            {i > 0 ? (
-              <button onClick={() => handelRemove(i)}>remove</button>
-            ) : (
-              ""
+            {val.button == false && (
+              i<=0?
+              <button onClick={() => handeladd(val, i)}>Add</button>:
+              <>
+               <button onClick={() => handelRemove(i)}>remove</button>
+              <button onClick={() => handeladd(val, i)}>Add</button>
+              </>
             )}
+
+            {val.button == true && (
+              <button onClick={() => handelRemove(i)}>remove</button>)}
+            {/* {shoeAddRemovebuton && i >=0?(
+              <button onClick={() => handeladd(val, i)}>Add</button>
+              ) : (
+                i>0?
+                <button onClick={() => handeladd(val, i)}>Add</button>:
+              <button onClick={() => handelRemove(i)}>remove</button>
+            )} */}
+            {/* { == 0 ? (
+              ""
+            ) : (
+              <button onClick={() => handelRemove(i)}>remove</button>
+            )} */}
             {/* <button onClick={(e) => handelRemove(i)}>remove</button> */}
             {/* <RenderingAcadamic data={Acadamicinfo} /> */}
           </div>
         </div>
       ))}
-      <div style={{ color: "white", display:'flex', justifyItems:'center', justifyContent:'center' }}>
-        <button type="submit" onClick={onSubmit}>Submit</button>
+      <div
+        style={{
+          color: "white",
+          display: "flex",
+          justifyItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <button type="submit" onClick={onSubmit}>
+          Submit
+        </button>
       </div>
     </div>
   );
