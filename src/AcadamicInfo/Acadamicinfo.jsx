@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Acadamic from "./Acadamic";
+import { useNavigate } from "react-router-dom";
 
 const Acadamicinfo = () => {
   const [degree, setdegree] = useState("");
@@ -28,6 +29,7 @@ const Acadamicinfo = () => {
     Percentage: "",
     Year: "",
   });
+  const hist=useNavigate()
   console.log("this is errors ", Error);
   /////////handel change functions for every thing
   const handelchangeDegree = (e, i) => {
@@ -145,7 +147,7 @@ const Acadamicinfo = () => {
           // setError({ ...Error, ["Year"]: " the year is less then 1950" });
           data[i].Y = " the year is less then 1950";
         } else {
-          data[i].Y = " ";
+          data[i].Y = "";
           // setError({ ...Error, ["Year"]: "" });
         }
       }
@@ -299,8 +301,16 @@ const Acadamicinfo = () => {
         cheack[index].Percentage == ""
       ) {
         alert("please cheak there is an empty feild");
+        return
       } else {
-        alert("thanks your details are added");
+        console.log
+        ("this is cheack",cheack)
+        debugger
+        if (cheack[index].I==''&&cheack[index].Y==""&&cheack[index].d==''&&cheack[index].P==""){
+
+          alert("thanks your details are added");
+          hist("/Proffesional");
+        }
       }
     }
   };
